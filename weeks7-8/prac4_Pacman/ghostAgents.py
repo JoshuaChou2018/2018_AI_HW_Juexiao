@@ -147,19 +147,11 @@ def betterEvaluationFunctionGhost(currentGameState):
         Ghost evaluation function
     """
 
-    position = list(currentGameState.getPacmanPosition())
-    foodPos = currentGameState.getFood().asList()
-    foodList = []
-
-    for food in foodPos:
-        pacmanDist = manhattanDistance(position, food)
-        foodList.append(pacmanDist)
-
-    if not foodList:
-        foodList.append(0)
-
-    nearestPelletDist = min(foodList)
-    return currentGameState.getScore() + (-1) * nearestPelletDist
+    ghosts=currentGameState.getGhostStates()
+    distance_to_ghosts=[]
+    for ghost in ghosts:
+        distance_to_ghosts.append(manhattanDistance(currentGameState.getPacmanPosition(),ghost.configuration.pos))
+    return min(distance_to_ghosts)
 
 # Abbreviation
 ghostEval = betterEvaluationFunctionGhost
